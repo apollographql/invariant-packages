@@ -14,6 +14,14 @@
     "production",
     "NODE_ENV"
   ],
+  "homepage": "https://github.com/apollographql/rollup-plugin-invariant#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apollographql/rollup-plugin-invariant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apollographql/rollup-plugin-invariant/issues"
+  },
   "scripts": {
     "build": "tsc",
     "mocha": "mocha --reporter spec --full-trace lib/tests.js",
