@@ -15,7 +15,7 @@
     "NODE_ENV"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "node_modules/.bin/tsc",
     "mocha": "mocha --reporter spec --full-trace lib/tests.js",
     "prepublish": "npm run build",
     "test": "npm run build && npm run mocha"
