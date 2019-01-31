@@ -7,7 +7,7 @@
     "importHelpers": true,
     "declaration": true,
     "lib": ["es2015"],
-    "types": ["node"],
+    "types": ["node", "mocha"],
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true
