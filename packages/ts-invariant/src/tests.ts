@@ -10,11 +10,23 @@ describe("ts-invariant", function () {
     invariant(true, "ok");
     try {
       invariant(false, "expected");
-      throw new Error("should not have thrown");
+      throw new Error("unexpected");
+    } catch (e) {
+      assert.strictEqual(e.message, "expected");
+    }
+  });
+
+  it("should throw InvariantError instance", function () {
+    try {
+      invariant(false, "expected");
+      throw new Error("unexpected");
     } catch (e) {
       assert.strictEqual(e.message, "expected");
       assert(e instanceof Error);
       assert(e instanceof InvariantError);
+      assert.strictEqual(e.name, "Invariant Violation");
+      assert.strictEqual(e.framesToPop, 1);
+      assert.strictEqual(typeof e.stack, "string");
     }
   });
 });
