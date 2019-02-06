@@ -14,13 +14,13 @@
     "production",
     "NODE_ENV"
   ],
-  "homepage": "https://github.com/apollographql/rollup-plugin-invariant#readme",
+  "homepage": "https://github.com/apollographql/invariant-packages",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/apollographql/rollup-plugin-invariant.git"
+    "url": "git+https://github.com/apollographql/invariant-packages.git"
   },
   "bugs": {
-    "url": "https://github.com/apollographql/rollup-plugin-invariant/issues"
+    "url": "https://github.com/apollographql/invariant-packages/issues"
   },
   "scripts": {
     "build": "tsc",
