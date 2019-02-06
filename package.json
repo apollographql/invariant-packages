@@ -1,46 +1,35 @@
 {
-  "name": "rollup-plugin-invariant",
-  "version": "0.1.2",
+  "name": "invariant-packages",
+  "private": true,
   "author": "Ben Newman <ben@apollographql.com>",
-  "description": "Rollup plugin to strip invariant(condition, message) strings in production",
+  "description": "Packages for working with invariant(condition, message) assertions",
   "license": "MIT",
-  "main": "lib/plugin.js",
-  "types": "lib/plugin.d.ts",
   "keywords": [
+    "invariant",
+    "assertion",
+    "precondition",
     "rollup",
     "plugin",
-    "invariant",
+    "TypeScript",
     "development",
     "production",
     "NODE_ENV"
   ],
-  "homepage": "https://github.com/apollographql/rollup-plugin-invariant#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/apollographql/rollup-plugin-invariant.git"
-  },
-  "bugs": {
-    "url": "https://github.com/apollographql/rollup-plugin-invariant/issues"
-  },
   "scripts": {
-    "build": "tsc",
-    "mocha": "mocha --reporter spec --full-trace lib/tests.js",
+    "postinstall": "lerna exec -- npm install",
+    "build": "lerna run build",
     "prepublish": "npm run build",
-    "test": "npm run build && npm run mocha"
+    "test": "npm run build && lerna run test"
   },
   "devDependencies": {
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.20",
     "acorn": "^6.0.6",
+    "lerna": "^3.10.7",
     "mocha": "^5.2.0",
     "react": "^16.7.0",
     "react-apollo": "^2.4.1",
     "react-dom": "^16.7.0",
     "typescript": "^3.2.4"
-  },
-  "dependencies": {
-    "recast": "^0.17.2",
-    "rollup-pluginutils": "^2.3.3",
-    "tslib": "^1.9.3"
   }
 }

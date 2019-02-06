@@ -1,0 +1,36 @@
+{
+  "name": "rollup-plugin-invariant",
+  "version": "0.1.2",
+  "author": "Ben Newman <ben@apollographql.com>",
+  "description": "Rollup plugin to strip invariant(condition, message) strings in production",
+  "license": "MIT",
+  "main": "lib/plugin.js",
+  "types": "lib/plugin.d.ts",
+  "keywords": [
+    "rollup",
+    "plugin",
+    "invariant",
+    "development",
+    "production",
+    "NODE_ENV"
+  ],
+  "homepage": "https://github.com/apollographql/rollup-plugin-invariant#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apollographql/rollup-plugin-invariant.git"
+  },
+  "bugs": {
+    "url": "https://github.com/apollographql/rollup-plugin-invariant/issues"
+  },
+  "scripts": {
+    "build": "tsc",
+    "mocha": "mocha --reporter spec --full-trace lib/tests.js",
+    "prepublish": "npm run build",
+    "test": "npm run build && npm run mocha"
+  },
+  "dependencies": {
+    "recast": "^0.17.2",
+    "rollup-pluginutils": "^2.3.3",
+    "tslib": "^1.9.3"
+  }
+}
