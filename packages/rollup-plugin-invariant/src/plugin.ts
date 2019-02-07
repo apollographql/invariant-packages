@@ -31,7 +31,7 @@ export default function invariantPlugin(options = {} as any) {
 
           if (node.callee.type === "MemberExpression" &&
               isIdWithName(node.callee.object, "invariant") &&
-              isIdWithName(node.callee.property, "warn")) {
+              isIdWithName(node.callee.property, "warn", "error")) {
             return b.logicalExpression("||", makeNodeEnvTest(), node);
           }
         },
@@ -60,8 +60,10 @@ export default function invariantPlugin(options = {} as any) {
   };
 }
 
-function isIdWithName(node: any, name: string) {
-  return node && node.type === "Identifier" && node.name === name;
+function isIdWithName(node: any, ...names: string[]) {
+  return node &&
+    node.type === "Identifier" &&
+    names.some(name => name === node.name);
 }
 
 function isCallWithLength(

@@ -118,4 +118,16 @@ describe("rollup-plugin-invariant", function () {
       }
     `);
   });
+
+  it("should strip invariant.error(...) calls", function () {
+    checkTransform(`
+      if (!condition) {
+        invariant.error("will", "be", "stripped");
+      }
+    `, `
+      if (!condition) {
+        process.env.NODE_ENV === "production" || invariant.error("will", "be", "stripped");
+      }
+    `);
+  });
 });
