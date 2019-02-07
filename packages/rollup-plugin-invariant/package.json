@@ -34,6 +34,10 @@
     "tslib": "^1.9.3"
   },
   "devDependencies": {
-    "mocha": "^5.2.0"
+    "acorn": "^6.0.6",
+    "mocha": "^5.2.0",
+    "react": "^16.7.0",
+    "react-apollo": "^2.4.1",
+    "react-dom": "^16.7.0"
   }
 }

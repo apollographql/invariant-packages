@@ -24,11 +24,7 @@
   "devDependencies": {
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.20",
-    "acorn": "^6.0.6",
     "lerna": "^3.10.7",
-    "react": "^16.7.0",
-    "react-apollo": "^2.4.1",
-    "react-dom": "^16.7.0",
     "typescript": "^3.2.4"
   }
 }
