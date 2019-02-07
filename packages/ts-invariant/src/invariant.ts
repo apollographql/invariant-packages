@@ -15,7 +15,7 @@ export class InvariantError extends Error {
   }
 }
 
-export function invariant(condition: any, message: string) {
+export function invariant(condition: any, message?: string) {
   if (!condition) {
     throw new InvariantError(message);
   }
