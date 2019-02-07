@@ -32,7 +32,7 @@ export default function invariantPlugin(options = {} as any) {
           if (node.callee.type === "MemberExpression" &&
               isIdWithName(node.callee.object, "invariant") &&
               isIdWithName(node.callee.property, "warn")) {
-            return b.logicalExpression("&&", makeNodeEnvTest(), node);
+            return b.logicalExpression("||", makeNodeEnvTest(), node);
           }
         },
 

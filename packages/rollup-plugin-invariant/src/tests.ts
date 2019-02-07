@@ -114,7 +114,7 @@ describe("rollup-plugin-invariant", function () {
       }
     `, `
       if (!condition) {
-        process.env.NODE_ENV === "production" && invariant.warn("will", "be", "stripped");
+        process.env.NODE_ENV === "production" || invariant.warn("will", "be", "stripped");
       }
     `);
   });
