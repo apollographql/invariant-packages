@@ -21,4 +21,10 @@ export function invariant(condition: any, message: string) {
   }
 }
 
+export namespace invariant {
+  export function warn(...args: any[]) {
+    return console.warn(...args);
+  }
+}
+
 export default invariant;

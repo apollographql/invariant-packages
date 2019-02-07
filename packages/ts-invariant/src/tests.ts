@@ -53,4 +53,25 @@ describe("ts-invariant", function () {
       "name",
     ]);
   });
+
+  it("invariant.warn", function () {
+    const argsReceived: any[][] = [];
+    const { warn } = console;
+    console.warn = (...args) => {
+      argsReceived.push(args);
+    };
+    try {
+      invariant.warn("named", "export");
+      assert.deepEqual(argsReceived, [
+        ["named", "export"],
+      ]);
+      defaultExport.warn("default", "export");
+      assert.deepEqual(argsReceived, [
+        ["named", "export"],
+        ["default", "export"],
+      ]);
+    } finally {
+      console.warn = warn;
+    }
+  });
 });
