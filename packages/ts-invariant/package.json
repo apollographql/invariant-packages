@@ -5,6 +5,7 @@
   "description": "TypeScript implementation of invariant(condition, message)",
   "license": "MIT",
   "main": "lib/invariant.js",
+  "module": "lib/invariant.esm.js",
   "types": "lib/invariant.d.ts",
   "keywords": [
     "invariant",
@@ -21,7 +22,7 @@
     "url": "https://github.com/apollographql/invariant-packages/issues"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && rollup -c",
     "mocha": "mocha --reporter spec --full-trace lib/tests.js",
     "prepublish": "npm run build",
     "test": "npm run build && npm run mocha"
@@ -32,6 +33,8 @@
   "devDependencies": {
     "@types/invariant": "^2.2.29",
     "invariant": "^2.2.4",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "rollup": "^1.1.2",
+    "rollup-plugin-typescript2": "^0.19.2"
   }
 }

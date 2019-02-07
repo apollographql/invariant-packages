@@ -4,7 +4,7 @@ const {
     obj.__proto__ = proto;
     return obj;
   },
-} = Object;
+} = Object as any;
 
 export class InvariantError extends Error {
   framesToPop = 1;
