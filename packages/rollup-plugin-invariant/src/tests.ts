@@ -3,6 +3,7 @@ import fs from "fs";
 import plugin from "./plugin";
 import recast from "recast";
 import { parse } from "recast/parsers/acorn";
+import invariant, { InvariantError } from "ts-invariant";
 
 describe("rollup-plugin-invariant", function () {
   const CONDITION_AST = recast.parse(
@@ -23,7 +24,7 @@ describe("rollup-plugin-invariant", function () {
     }, code, path);
 
     if (!result) {
-      throw new Error(`Transforming ${id} failed`);
+      throw new InvariantError(`Transforming ${id} failed`);
     }
 
     let invariantCount = 0;
@@ -53,6 +54,7 @@ describe("rollup-plugin-invariant", function () {
       }
     });
 
+    invariant(invariantCount > 0);
     assert.notStrictEqual(invariantCount, 0);
   }
 
@@ -67,5 +69,53 @@ describe("rollup-plugin-invariant", function () {
 
   it("should strip invariant error strings from react-apollo", function () {
     check("react-apollo");
+  });
+
+  function checkTransform(input: string, output: string = input) {
+    const ast = parse(input);
+    const result = plugin().transform.call({
+      parse(code: string) {
+        return ast;
+      }
+    }, input, "fake/module/identifier");
+
+    if (!result) {
+      throw new InvariantError(`Transform failed: ${
+        input
+      }`);
+    }
+
+    assert.strictEqual(result.code, output);
+  }
+
+  it("leaves message-less invariant calls untouched", function () {
+    checkTransform(`
+      invariant(true);
+    `);
+
+    checkTransform(`
+      invariant(false);
+    `);
+
+    checkTransform(`
+      invariant(
+        !first &&
+        second &&
+        third ||
+        fourth
+      );
+    `);
+  });
+
+  it("should strip invariant.warn(...) calls", function () {
+    checkTransform(`
+      if (!condition) {
+        invariant.warn("will", "be", "stripped");
+      }
+    `, `
+      if (!condition) {
+        process.env.NODE_ENV === "production" && invariant.warn("will", "be", "stripped");
+      }
+    `);
   });
 });

@@ -17,6 +17,7 @@ export default function invariantPlugin(options = {} as any) {
         visitCallExpression(path) {
           this.traverse(path);
           const node = path.value;
+
           if (isCallWithLength(node, "invariant", 1)) {
             return b.conditionalExpression(
               makeNodeEnvTest(),
@@ -26,6 +27,12 @@ export default function invariantPlugin(options = {} as any) {
               }),
               node,
             );
+          }
+
+          if (node.callee.type === "MemberExpression" &&
+              isIdWithName(node.callee.object, "invariant") &&
+              isIdWithName(node.callee.property, "warn")) {
+            return b.logicalExpression("&&", makeNodeEnvTest(), node);
           }
         },
 
@@ -53,16 +60,17 @@ export default function invariantPlugin(options = {} as any) {
   };
 }
 
+function isIdWithName(node: any, name: string) {
+  return node && node.type === "Identifier" && node.name === name;
+}
+
 function isCallWithLength(
   node: any,
   name: string,
   length: number,
 ) {
-  return (
-    node.callee.type === "Identifier" &&
-    node.callee.name === name &&
-    node.arguments.length > length
-  );
+  return isIdWithName(node.callee, name) &&
+    node.arguments.length > length;
 }
 
 function makeNodeEnvTest() {

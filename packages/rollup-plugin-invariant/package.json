@@ -38,6 +38,7 @@
     "mocha": "^5.2.0",
     "react": "^16.7.0",
     "react-apollo": "^2.4.1",
-    "react-dom": "^16.7.0"
+    "react-dom": "^16.7.0",
+    "ts-invariant": "latest"
   }
 }
