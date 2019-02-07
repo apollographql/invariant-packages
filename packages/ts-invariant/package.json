@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@types/invariant": "^2.2.29",
-    "invariant": "^2.2.4"
+    "invariant": "^2.2.4",
+    "mocha": "^5.2.0"
   }
 }

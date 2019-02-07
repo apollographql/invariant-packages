@@ -32,5 +32,8 @@
     "recast": "^0.17.2",
     "rollup-pluginutils": "^2.3.3",
     "tslib": "^1.9.3"
+  },
+  "devDependencies": {
+    "mocha": "^5.2.0"
   }
 }
