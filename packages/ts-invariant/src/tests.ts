@@ -74,4 +74,25 @@ describe("ts-invariant", function () {
       console.warn = warn;
     }
   });
+
+  it("invariant.error", function () {
+    const argsReceived: any[][] = [];
+    const { error } = console;
+    console.error = (...args) => {
+      argsReceived.push(args);
+    };
+    try {
+      invariant.error("named", "export");
+      assert.deepEqual(argsReceived, [
+        ["named", "export"],
+      ]);
+      defaultExport.error("default", "export");
+      assert.deepEqual(argsReceived, [
+        ["named", "export"],
+        ["default", "export"],
+      ]);
+    } finally {
+      console.error = error;
+    }
+  });
 });
