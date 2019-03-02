@@ -31,7 +31,7 @@ This class is especially useful when writing TypeScript, because
 invariant(typeof value === "number", "not a number");
 console.log(value * 2); // type error!
 ```
-doesn't tell TypeScript anything useful about `value`, whereas the following code can take full advantage of TypeScript's conditional type narrowing functionality:
+doesn't tell TypeScript anything useful about `value`, whereas the following code can take full advantage of TypeScript's [conditional type narrowing](https://basarat.gitbooks.io/typescript/docs/types/typeGuard.html) functionality:
 ```ts
 if (typeof value !== "number") {
   throw InvariantError("not a number");
