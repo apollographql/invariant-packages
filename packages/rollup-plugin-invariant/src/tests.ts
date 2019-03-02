@@ -13,11 +13,16 @@ describe("rollup-plugin-invariant", function () {
 
   assert.strictEqual(CONDITION_AST.type, "BinaryExpression");
 
-  function check(id: string) {
+  function check(
+    id: string,
+    options?: {
+      errorCodes: boolean;
+    },
+  ) {
     const path = require.resolve(id);
     const code = fs.readFileSync(path, "utf8");
     const ast = parse(code);
-    const result = plugin().transform.call({
+    const result = plugin(options).transform.call({
       parse(code: string) {
         return ast;
       },
@@ -44,7 +49,14 @@ describe("rollup-plugin-invariant", function () {
           );
 
           if (parent.consequent === node) {
-            assert.strictEqual(node.arguments.length, 1);
+            if (options && options.errorCodes) {
+              assert.strictEqual(node.arguments.length, 2);
+              const arg2 = node.arguments[1];
+              recast.types.namedTypes.Literal.assert(arg2);
+              assert.strictEqual(typeof arg2.value, "number");
+            } else {
+              assert.strictEqual(node.arguments.length, 1);
+            }
           }
 
           ++invariantCount;
@@ -60,6 +72,9 @@ describe("rollup-plugin-invariant", function () {
 
   it("should strip invariant error strings from react", function () {
     check("react/cjs/react.development.js");
+    check("react/cjs/react.development.js", {
+      errorCodes: true,
+    });
   });
 
   it("should strip invariant error strings from react-dom", function () {
@@ -69,6 +84,9 @@ describe("rollup-plugin-invariant", function () {
 
   it("should strip invariant error strings from react-apollo", function () {
     check("react-apollo");
+    check("react-apollo", {
+      errorCodes: true,
+    });
   });
 
   function checkTransform(input: string, output: string = input) {

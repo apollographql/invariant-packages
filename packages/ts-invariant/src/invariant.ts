@@ -9,13 +9,17 @@ const {
 export class InvariantError extends Error {
   framesToPop = 1;
   name = genericMessage;
-  constructor(message: string = genericMessage) {
-    super(message);
+  constructor(message: string | number = genericMessage) {
+    super(
+      typeof message === "number"
+        ? `${genericMessage}: ${message} (see https://github.com/apollographql/invariant-packages)`
+        : message
+    );
     setPrototypeOf(this, InvariantError.prototype);
   }
 }
 
-export function invariant(condition: any, message?: string) {
+export function invariant(condition: any, message?: string | number) {
   if (!condition) {
     throw new InvariantError(message);
   }

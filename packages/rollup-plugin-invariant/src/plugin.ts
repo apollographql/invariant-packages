@@ -4,6 +4,7 @@ const { createFilter } = require("rollup-pluginutils");
 
 export default function invariantPlugin(options = {} as any) {
   const filter = createFilter(options.include, options.exclude);
+  let nextErrorCode = 1;
 
   return {
     transform(code: string, id: string) {
@@ -19,11 +20,16 @@ export default function invariantPlugin(options = {} as any) {
           const node = path.value;
 
           if (isCallWithLength(node, "invariant", 1)) {
+            const newArgs = node.arguments.slice(0, 1);
+            if (options.errorCodes) {
+              newArgs.push(b.numericLiteral(nextErrorCode++));
+            }
+
             return b.conditionalExpression(
               makeNodeEnvTest(),
               b.callExpression.from({
                 ...node,
-                arguments: node.arguments.slice(0, 1),
+                arguments: newArgs,
               }),
               node,
             );
@@ -40,11 +46,16 @@ export default function invariantPlugin(options = {} as any) {
           this.traverse(path);
           const node = path.value;
           if (isCallWithLength(node, "InvariantError", 0)) {
+            const newArgs = [];
+            if (options.errorCodes) {
+              newArgs.push(b.numericLiteral(nextErrorCode++));
+            }
+
             return b.conditionalExpression(
               makeNodeEnvTest(),
               b.newExpression.from({
                 ...node,
-                arguments: [],
+                arguments: newArgs,
               }),
               node,
             );
