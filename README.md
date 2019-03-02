@@ -10,7 +10,7 @@ This repository is home to the [`ts-invariant`](packages/ts-invariant) and [`rol
 
 The `ts-invariant` package exports the following utilities:
 
-#### `invariant(condition, message: string)`
+#### `invariant(condition: any, message: string)`
 
 Similar to the [the `invariant` function used by React](https://www.npmjs.com/package/invariant), this function throws an `InvariantError` with the given `message` if the `condition` argument evaluates to a falsy value.
 
