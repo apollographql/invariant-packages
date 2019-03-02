@@ -54,6 +54,25 @@ describe("ts-invariant", function () {
     ]);
   });
 
+  it("should annotate numeric error codes with URL", function () {
+    try {
+      invariant(false, 123);
+      throw new Error("unexpected");
+    } catch (e) {
+      assert(e instanceof InvariantError);
+      assert.strictEqual(
+        e.message,
+        "Invariant Violation: 123 (see https://github.com/apollographql/invariant-packages)",
+      );
+    }
+
+    const error = new InvariantError(456);
+    assert.strictEqual(
+      error.message,
+      "Invariant Violation: 456 (see https://github.com/apollographql/invariant-packages)",
+    );
+  });
+
   it("invariant.warn", function () {
     const argsReceived: any[][] = [];
     const { warn } = console;
