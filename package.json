@@ -24,7 +24,7 @@
   "devDependencies": {
     "@types/mocha": "^5.2.5",
     "@types/node": "^10.12.20",
-    "lerna": "^3.10.7",
+    "lerna": "^3.13.1",
     "typescript": "^3.3.3333"
   }
 }
