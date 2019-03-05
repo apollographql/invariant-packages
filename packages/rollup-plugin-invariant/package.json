@@ -39,6 +39,6 @@
     "react": "^16.7.0",
     "react-apollo": "^2.4.1",
     "react-dom": "^16.7.0",
-    "ts-invariant": "^0.3.2"
+    "ts-invariant": "file:../ts-invariant"
   }
 }
