@@ -26,9 +26,7 @@ export default function invariantPlugin(options = {} as any) {
             })
           ) {
             path.get("specifiers").push(
-              b.importSpecifier(
-                b.identifier("process"),
-              ),
+              b.importSpecifier(b.identifier("process")),
             );
           }
         },

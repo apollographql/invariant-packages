@@ -177,5 +177,27 @@ describe("rollup-plugin-invariant", function () {
     `, {
       importProcessPolyfill: true,
     });
+
+    checkTransform(`
+      import { foo } from "bar";
+      import invariant from "ts-invariant";
+      invariant(true, "ok");
+    `, `
+      import { foo } from "bar";
+      import invariant, { process } from "ts-invariant";
+      process.env.NODE_ENV === "production" ? invariant(true) : invariant(true, "ok");
+    `, {
+      importProcessPolyfill: true,
+    });
+
+    checkTransform(`
+      import { foo } from "bar";
+      import invariant from "ts-invariant";
+      invariant(true, "ok");
+    `, `
+      import { foo } from "bar";
+      import invariant from "ts-invariant";
+      process.env.NODE_ENV === "production" ? invariant(true) : invariant(true, "ok");
+    `);
   });
 });
