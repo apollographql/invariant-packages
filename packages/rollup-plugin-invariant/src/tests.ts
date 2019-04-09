@@ -89,9 +89,13 @@ describe("rollup-plugin-invariant", function () {
     });
   });
 
-  function checkTransform(input: string, output: string = input) {
+  function checkTransform(
+    input: string,
+    output: string = input,
+    options = {},
+  ) {
     const ast = parse(input);
-    const result = plugin().transform.call({
+    const result = plugin(options).transform.call({
       parse(code: string) {
         return ast;
       }
@@ -146,6 +150,54 @@ describe("rollup-plugin-invariant", function () {
       if (!condition) {
         process.env.NODE_ENV === "production" || invariant.error("will", "be", "stripped");
       }
+    `);
+  });
+
+  it("should import a process polyfill if requested", function () {
+    checkTransform(`
+      import { foo } from "bar";
+      import def, { invariant, InvariantError } from "ts-invariant";
+      invariant(true, "ok");
+    `, `
+      import { foo } from "bar";
+      import def, { invariant, InvariantError, process } from "ts-invariant";
+      process.env.NODE_ENV === "production" ? invariant(true) : invariant(true, "ok");
+    `, {
+      importProcessPolyfill: true,
+    });
+
+    checkTransform(`
+      import { foo } from "bar";
+      import def, { process, invariant } from "ts-invariant";
+      invariant(true, "ok");
+    `, `
+      import { foo } from "bar";
+      import def, { process, invariant } from "ts-invariant";
+      process.env.NODE_ENV === "production" ? invariant(true) : invariant(true, "ok");
+    `, {
+      importProcessPolyfill: true,
+    });
+
+    checkTransform(`
+      import { foo } from "bar";
+      import invariant from "ts-invariant";
+      invariant(true, "ok");
+    `, `
+      import { foo } from "bar";
+      import invariant, { process } from "ts-invariant";
+      process.env.NODE_ENV === "production" ? invariant(true) : invariant(true, "ok");
+    `, {
+      importProcessPolyfill: true,
+    });
+
+    checkTransform(`
+      import { foo } from "bar";
+      import invariant from "ts-invariant";
+      invariant(true, "ok");
+    `, `
+      import { foo } from "bar";
+      import invariant from "ts-invariant";
+      process.env.NODE_ENV === "production" ? invariant(true) : invariant(true, "ok");
     `);
   });
 });
