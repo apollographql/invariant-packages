@@ -35,4 +35,10 @@ export namespace invariant {
   }
 }
 
+// Code that uses ts-invariant with rollup-plugin-invariant may want to
+// import this process stub to avoid errors evaluating process.env.NODE_ENV.
+const processStub: NodeJS.Process =
+  typeof process === "object" ? process : { env: {} } as any;
+export { processStub as process };
+
 export default invariant;

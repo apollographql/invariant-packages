@@ -1,5 +1,5 @@
 import assert from "assert";
-import defaultExport, { invariant, InvariantError } from "./invariant";
+import defaultExport, { invariant, InvariantError, process } from "./invariant";
 import reactInvariant from "invariant";
 
 describe("ts-invariant", function () {
@@ -112,6 +112,14 @@ describe("ts-invariant", function () {
       ]);
     } finally {
       console.error = error;
+    }
+  });
+
+  it("should provide a usable process.env stub", function () {
+    assert.strictEqual(typeof process, "object");
+    assert.strictEqual(typeof process.env, "object");
+    if (process.versions) {
+      assert.strictEqual(typeof process.versions.node, "string");
     }
   });
 });
