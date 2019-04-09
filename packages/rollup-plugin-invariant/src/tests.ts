@@ -191,6 +191,26 @@ describe("rollup-plugin-invariant", function () {
     });
 
     checkTransform(`
+      import invariant from "ts-invariant";
+      import { InvariantError } from "ts-invariant";
+    `, `
+      import invariant, { process } from "ts-invariant";
+      import { InvariantError } from "ts-invariant";
+    `, {
+      importProcessPolyfill: true,
+    });
+
+    checkTransform(`
+      import { InvariantError } from "ts-invariant";
+      import invariant from "ts-invariant";
+    `, `
+      import { InvariantError, process } from "ts-invariant";
+      import invariant from "ts-invariant";
+    `, {
+      importProcessPolyfill: true,
+    });
+
+    checkTransform(`
       import { foo } from "bar";
       import invariant from "ts-invariant";
       invariant(true, "ok");

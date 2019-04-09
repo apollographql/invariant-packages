@@ -13,18 +13,20 @@ export default function invariantPlugin(options = {} as any) {
       }
 
       const ast = recast.parse(code, { parser: this });
+      let needToImportProcess = !!options.importProcessPolyfill;
 
       recast.visit(ast, {
         visitImportDeclaration(path) {
           this.traverse(path);
           const node = path.value;
           if (
-            options.importProcessPolyfill &&
+            needToImportProcess &&
             node.source.value === "ts-invariant" &&
             !node.specifiers.some((spec: any) => {
               return isIdWithName(spec.imported, "process");
             })
           ) {
+            needToImportProcess = false;
             path.get("specifiers").push(
               b.importSpecifier(b.identifier("process")),
             );
