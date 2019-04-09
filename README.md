@@ -120,3 +120,9 @@ Invariant Violation: <error code> (see https://github.com/apollographql/invarian
 ```
 
 Since the full development version of the error is colocated with the production one in code that has been transformed by `rollup-plugin-invariant`, it should be relatively easy to determine the nature of the error by looking for the given error code in the unminified bundle.
+
+#### Automatic `process` import
+
+If you create an instance of the plugin with the `{ importProcessPolyfill: true }` option, any `import ... from "ts-invariant"` declarations will have `process` added to the list of imported identifiers.
+
+When `ts-invariant` is used in a JS environment where `process` is globally defined, the `process` export will simply be the same as that global object. Otherwise, it will be an object of the shape `{ env: {} }`, to ensure `process.env.NODE_ENV` is safe to evaluate at runtime, in case it has not been replaced by the minifier.
