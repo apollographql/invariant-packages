@@ -25,14 +25,15 @@ export function invariant(condition: any, message?: string | number) {
   }
 }
 
-export namespace invariant {
-  export function warn(...args: any[]) {
-    return console.warn(...args);
-  }
+function wrapConsoleMethod(method: "warn" | "error") {
+  return function () {
+    return console[method].apply(console, arguments as any);
+  } as (...args: any[]) => void;
+}
 
-  export function error(...args: any[]) {
-    return console.error(...args);
-  }
+export namespace invariant {
+  export const warn = wrapConsoleMethod("warn");
+  export const error = wrapConsoleMethod("error");
 }
 
 // Code that uses ts-invariant with rollup-plugin-invariant may want to
