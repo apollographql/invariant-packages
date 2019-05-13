@@ -1,7 +1,7 @@
 import assert from "assert";
 import fs from "fs";
 import plugin from "./plugin";
-import recast from "recast";
+import * as recast from "recast";
 import { parse } from "recast/parsers/acorn";
 import invariant, { InvariantError } from "ts-invariant";
 
@@ -36,7 +36,7 @@ describe("rollup-plugin-invariant", function () {
 
     recast.visit(parse(result.code), {
       visitCallExpression(path) {
-        const node = path.value;
+        const node = path.node;
         if (node.callee.type === "Identifier" &&
             node.callee.name === "invariant") {
 
@@ -52,8 +52,11 @@ describe("rollup-plugin-invariant", function () {
             if (options && options.errorCodes) {
               assert.strictEqual(node.arguments.length, 2);
               const arg2 = node.arguments[1];
-              recast.types.namedTypes.Literal.assert(arg2);
-              assert.strictEqual(typeof arg2.value, "number");
+              if (recast.types.namedTypes.Literal.check(arg2)) {
+                assert.strictEqual(typeof arg2.value, "number");
+              } else {
+                assert.fail("unexpected argument: " + JSON.stringify(arg2));
+              }
             } else {
               assert.strictEqual(node.arguments.length, 1);
             }

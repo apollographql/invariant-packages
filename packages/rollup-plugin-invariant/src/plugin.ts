@@ -1,4 +1,4 @@
-import recast from "recast";
+import * as recast from "recast";
 const b = recast.types.builders;
 const { createFilter } = require("rollup-pluginutils");
 
@@ -18,10 +18,11 @@ export default function invariantPlugin(options = {} as any) {
       recast.visit(ast, {
         visitImportDeclaration(path) {
           this.traverse(path);
-          const node = path.value;
+          const node = path.node;
           if (
             needToImportProcess &&
             node.source.value === "ts-invariant" &&
+            node.specifiers &&
             !node.specifiers.some((spec: any) => {
               return isIdWithName(spec.imported, "process");
             })
@@ -35,7 +36,7 @@ export default function invariantPlugin(options = {} as any) {
 
         visitCallExpression(path) {
           this.traverse(path);
-          const node = path.value;
+          const node = path.node;
 
           if (isCallWithLength(node, "invariant", 1)) {
             const newArgs = node.arguments.slice(0, 1);
@@ -62,7 +63,7 @@ export default function invariantPlugin(options = {} as any) {
 
         visitNewExpression(path) {
           this.traverse(path);
-          const node = path.value;
+          const node = path.node;
           if (isCallWithLength(node, "InvariantError", 0)) {
             const newArgs = [];
             if (options.errorCodes) {
@@ -89,14 +90,16 @@ export default function invariantPlugin(options = {} as any) {
   };
 }
 
+type CallExpression = recast.types.namedTypes.CallExpression;
+type NewExpression = recast.types.namedTypes.NewExpression;
+
 function isIdWithName(node: any, ...names: string[]) {
-  return node &&
-    node.type === "Identifier" &&
+  return recast.types.namedTypes.Identifier.check(node) &&
     names.some(name => name === node.name);
 }
 
 function isCallWithLength(
-  node: any,
+  node: CallExpression | NewExpression,
   name: string,
   length: number,
 ) {
