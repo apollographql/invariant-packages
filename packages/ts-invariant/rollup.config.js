@@ -16,7 +16,7 @@ export default [{
   output: {
     file: "lib/invariant.esm.js",
     format: "esm",
-    sourceMap: true,
+    sourcemap: true,
     globals,
   },
   plugins: [
@@ -33,7 +33,7 @@ export default [{
     file: "lib/invariant.js",
     format: "cjs",
     exports: "named",
-    sourceMap: true,
+    sourcemap: true,
     name: "ts-invariant",
     globals,
   },
