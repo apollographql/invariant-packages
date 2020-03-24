@@ -1,6 +1,6 @@
 import assert from "assert";
 import fs from "fs";
-import plugin from "./plugin";
+import plugin, { PluginOptions } from './plugin';
 import * as recast from "recast";
 import { parse } from "recast/parsers/acorn";
 import invariant, { InvariantError } from "ts-invariant";
@@ -15,9 +15,7 @@ describe("rollup-plugin-invariant", function () {
 
   function check(
     id: string,
-    options?: {
-      errorCodes: boolean;
-    },
+    options?: PluginOptions,
   ) {
     const path = require.resolve(id);
     const code = fs.readFileSync(path, "utf8");
