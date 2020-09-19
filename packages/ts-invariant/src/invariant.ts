@@ -19,7 +19,7 @@ export class InvariantError extends Error {
   }
 }
 
-export function invariant(condition: any, message?: string | number) {
+export function invariant(condition: any, message?: string | number): asserts condition {
   if (!condition) {
     throw new InvariantError(message);
   }
