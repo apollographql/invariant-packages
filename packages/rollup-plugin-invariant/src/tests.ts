@@ -132,6 +132,18 @@ describe("rollup-plugin-invariant", function () {
     `);
   });
 
+  it("should strip invariant.log(...) calls", function () {
+    checkTransform(`
+      if (!condition) {
+        invariant.log("will", "be", "stripped");
+      }
+    `, `
+      if (!condition) {
+        process.env.NODE_ENV === "production" || invariant.log("will", "be", "stripped");
+      }
+    `);
+  });
+
   it("should strip invariant.warn(...) calls", function () {
     checkTransform(`
       if (!condition) {
