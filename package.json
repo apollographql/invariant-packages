@@ -22,7 +22,7 @@
     "test": "npm run build && lerna run test"
   },
   "devDependencies": {
-    "@types/mocha": "^5.2.6",
+    "@types/mocha": "^8.0.3",
     "@types/node": "^10.12.20",
     "lerna": "^3.13.4",
     "typescript": "^3.4.2"
