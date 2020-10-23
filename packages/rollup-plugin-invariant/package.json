@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-invariant",
-  "version": "0.5.6",
+  "version": "0.6.0",
   "author": "Ben Newman <ben@apollographql.com>",
   "description": "Rollup plugin to strip invariant(condition, message) strings in production",
   "license": "MIT",
@@ -40,5 +40,8 @@
     "react-apollo": "^2.4.1",
     "react-dom": "^16.7.0",
     "ts-invariant": "file:../ts-invariant"
+  },
+  "engines": {
+    "node": ">=8"
   }
 }

@@ -151,4 +151,12 @@ describe("ts-invariant", function () {
       assert.strictEqual(typeof process.versions.node, "string");
     }
   });
+
+  it("should let TypeScript know about the assertion made", function () {
+    const value: { foo?: { bar?: string } } = {foo: {bar: "bar"}};
+    invariant(value.foo, 'fail');
+
+     // On compile time this should not raise "TS2532: Object is possibly 'undefined'."
+    assert.strictEqual(value.foo.bar, "bar");
+  });
 });
