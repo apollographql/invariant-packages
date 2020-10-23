@@ -1,5 +1,10 @@
 import assert from "assert";
-import defaultExport, { invariant, InvariantError, process } from "./invariant";
+import defaultExport, {
+  invariant,
+  InvariantError,
+  setVerbosity,
+  process,
+} from "./invariant";
 import reactInvariant from "invariant";
 
 describe("ts-invariant", function () {
@@ -73,46 +78,70 @@ describe("ts-invariant", function () {
     );
   });
 
-  it("invariant.warn", function () {
+  function checkConsoleMethod(
+    name: "log" | "warn" | "error",
+    expectOutput: boolean,
+  ) {
     const argsReceived: any[][] = [];
-    const { warn } = console;
-    console.warn = (...args) => {
+    const originalMethod = console[name];
+    console[name] = (...args) => {
       argsReceived.push(args);
     };
     try {
-      invariant.warn("named", "export");
-      assert.deepEqual(argsReceived, [
+      invariant[name]("named", "export");
+      assert.deepEqual(argsReceived, expectOutput ? [
         ["named", "export"],
-      ]);
-      defaultExport.warn("default", "export");
-      assert.deepEqual(argsReceived, [
+      ] : []);
+      defaultExport[name]("default", "export");
+      assert.deepEqual(argsReceived, expectOutput ? [
         ["named", "export"],
         ["default", "export"],
-      ]);
+      ] : []);
     } finally {
-      console.warn = warn;
+      console[name] = originalMethod;
     }
+  }
+
+  it("invariant.log", function () {
+    checkConsoleMethod("log", true);
+  });
+
+  it("invariant.warn", function () {
+    checkConsoleMethod("warn", true);
   });
 
   it("invariant.error", function () {
-    const argsReceived: any[][] = [];
-    const { error } = console;
-    console.error = (...args) => {
-      argsReceived.push(args);
-    };
-    try {
-      invariant.error("named", "export");
-      assert.deepEqual(argsReceived, [
-        ["named", "export"],
-      ]);
-      defaultExport.error("default", "export");
-      assert.deepEqual(argsReceived, [
-        ["named", "export"],
-        ["default", "export"],
-      ]);
-    } finally {
-      console.error = error;
-    }
+    checkConsoleMethod("error", true);
+  });
+
+  it("setVerbosity", function () {
+    checkConsoleMethod("log", true);
+    checkConsoleMethod("warn", true);
+    checkConsoleMethod("error", true);
+
+    setVerbosity("warn");
+
+    checkConsoleMethod("log", false);
+    checkConsoleMethod("warn", true);
+    checkConsoleMethod("error", true);
+
+    setVerbosity("error");
+
+    checkConsoleMethod("log", false);
+    checkConsoleMethod("warn", false);
+    checkConsoleMethod("error", true);
+
+    setVerbosity("silent");
+
+    checkConsoleMethod("log", false);
+    checkConsoleMethod("warn", false);
+    checkConsoleMethod("error", false);
+
+    setVerbosity("log");
+
+    checkConsoleMethod("log", true);
+    checkConsoleMethod("warn", true);
+    checkConsoleMethod("error", true);
   });
 
   it("should provide a usable process.env stub", function () {
@@ -121,5 +150,13 @@ describe("ts-invariant", function () {
     if (process.versions) {
       assert.strictEqual(typeof process.versions.node, "string");
     }
+  });
+
+  it("should let TypeScript know about the assertion made", function () {
+    const value: { foo?: { bar?: string } } = {foo: {bar: "bar"}};
+    invariant(value.foo, 'fail');
+
+     // On compile time this should not raise "TS2532: Object is possibly 'undefined'."
+    assert.strictEqual(value.foo.bar, "bar");
   });
 });

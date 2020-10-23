@@ -1,4 +1,4 @@
-# invariant-packages  [![CircleCI](https://circleci.com/gh/apollographql/invariant-packages/tree/master.svg?style=svg)](https://circleci.com/gh/apollographql/invariant-packages/tree/master)
+# invariant-packages ![CI](https://github.com/apollographql/invariant-packages/workflows/CI/badge.svg)
 
 Packages for working with `invariant(condition, message)` assertions.
 
@@ -25,20 +25,6 @@ Equivalent to calling `console.warn(...args)`.
 #### `new InvariantError(message: string)`
 
 The `Error` subclass thrown by failed `invariant` calls.
-
-This class is especially useful when writing TypeScript, because
-```ts
-invariant(typeof value === "number", "not a number");
-console.log(value * 2); // type error!
-```
-doesn't tell TypeScript anything useful about `value`, whereas the following code can take full advantage of TypeScript's [conditional type narrowing](https://basarat.gitbooks.io/typescript/docs/types/typeGuard.html) functionality:
-```ts
-if (typeof value !== "number") {
-  throw InvariantError("not a number");
-}
-// TypeScript understands that value must be a number here:
-console.log(value * 2);
-```
 
 ### Build-time usage (`rollup-plugin-invariant`)
 

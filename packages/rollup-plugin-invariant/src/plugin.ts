@@ -2,7 +2,14 @@ import * as recast from "recast";
 const b = recast.types.builders;
 const { createFilter } = require("rollup-pluginutils");
 
-export default function invariantPlugin(options = {} as any) {
+export interface PluginOptions {
+  errorCodes?: boolean;
+  importProcessPolyfill?: boolean;
+  include?: Array<string | RegExp> | string | RegExp | null,
+  exclude?: Array<string | RegExp> | string | RegExp | null,
+}
+
+export default function invariantPlugin(options: PluginOptions = {}) {
   const filter = createFilter(options.include, options.exclude);
   let nextErrorCode = 1;
 
@@ -56,7 +63,7 @@ export default function invariantPlugin(options = {} as any) {
 
           if (node.callee.type === "MemberExpression" &&
               isIdWithName(node.callee.object, "invariant") &&
-              isIdWithName(node.callee.property, "warn", "error")) {
+              isIdWithName(node.callee.property, "log", "warn", "error")) {
             return b.logicalExpression("||", makeNodeEnvTest(), node);
           }
         },

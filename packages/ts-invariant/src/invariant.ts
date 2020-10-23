@@ -19,21 +19,36 @@ export class InvariantError extends Error {
   }
 }
 
-export function invariant(condition: any, message?: string | number) {
+export function invariant(
+  condition: any,
+  message?: string | number,
+): asserts condition {
   if (!condition) {
     throw new InvariantError(message);
   }
 }
 
-function wrapConsoleMethod(method: "warn" | "error") {
+const verbosityLevels = ["log", "warn", "error", "silent"] as const;
+type VerbosityLevel = (typeof verbosityLevels)[number];
+type ConsoleMethodName = Exclude<VerbosityLevel, "silent">;
+let verbosityLevel = verbosityLevels.indexOf("log");
+
+function wrapConsoleMethod<M extends ConsoleMethodName>(method: M) {
   return function () {
-    return console[method].apply(console, arguments as any);
-  } as (...args: any[]) => void;
+    if (verbosityLevels.indexOf(method) >= verbosityLevel) {
+      return console[method].apply(console, arguments as any);
+    }
+  } as (typeof console)[M];
 }
 
 export namespace invariant {
+  export const log = wrapConsoleMethod("log");
   export const warn = wrapConsoleMethod("warn");
   export const error = wrapConsoleMethod("error");
+}
+
+export function setVerbosity(level: VerbosityLevel) {
+  verbosityLevel = Math.max(0, verbosityLevels.indexOf(level));
 }
 
 // Code that uses ts-invariant with rollup-plugin-invariant may want to

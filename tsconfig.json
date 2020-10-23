@@ -9,6 +9,7 @@
     "types": ["node", "mocha"],
     "strict": true,
     "noImplicitAny": true,
+    "strictNullChecks": true,
     "esModuleInterop": true
   }
 }
