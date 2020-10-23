@@ -1,4 +1,4 @@
-# invariant-packages  [![CircleCI](https://circleci.com/gh/apollographql/invariant-packages/tree/master.svg?style=svg)](https://circleci.com/gh/apollographql/invariant-packages/tree/master)
+# invariant-packages ![CI](https://github.com/apollographql/invariant-packages/workflows/CI/badge.svg)
 
 Packages for working with `invariant(condition, message)` assertions.
 
