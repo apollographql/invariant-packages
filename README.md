@@ -26,20 +26,6 @@ Equivalent to calling `console.warn(...args)`.
 
 The `Error` subclass thrown by failed `invariant` calls.
 
-This class is especially useful when writing TypeScript, because
-```ts
-invariant(typeof value === "number", "not a number");
-console.log(value * 2); // type error!
-```
-doesn't tell TypeScript anything useful about `value`, whereas the following code can take full advantage of TypeScript's [conditional type narrowing](https://basarat.gitbooks.io/typescript/docs/types/typeGuard.html) functionality:
-```ts
-if (typeof value !== "number") {
-  throw InvariantError("not a number");
-}
-// TypeScript understands that value must be a number here:
-console.log(value * 2);
-```
-
 ### Build-time usage (`rollup-plugin-invariant`)
 
 If you're using [Rollup](https://rollupjs.org) to bundle your code, or using a library that was bundled using Rollup and `rollup-plugin-invariant`, then the above utilities will be transformed so that minifiers can strip the long error strings from your production bundle.
