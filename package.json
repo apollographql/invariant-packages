@@ -26,5 +26,8 @@
     "@types/node": "^14.14.2",
     "lerna": "^3.13.4",
     "typescript": "^3.7.5"
+  },
+  "engines": {
+    "node": ">=8"
   }
 }
