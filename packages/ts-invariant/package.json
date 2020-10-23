@@ -1,6 +1,6 @@
 {
   "name": "ts-invariant",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "author": "Ben Newman <ben@apollographql.com>",
   "description": "TypeScript implementation of invariant(condition, message)",
   "license": "MIT",
