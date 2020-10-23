@@ -119,25 +119,25 @@ describe("ts-invariant", function () {
     checkConsoleMethod("warn", true);
     checkConsoleMethod("error", true);
 
-    setVerbosity("warn");
+    assert.strictEqual(setVerbosity("warn"), "log");
 
     checkConsoleMethod("log", false);
     checkConsoleMethod("warn", true);
     checkConsoleMethod("error", true);
 
-    setVerbosity("error");
+    assert.strictEqual(setVerbosity("error"), "warn");
 
     checkConsoleMethod("log", false);
     checkConsoleMethod("warn", false);
     checkConsoleMethod("error", true);
 
-    setVerbosity("silent");
+    assert.strictEqual(setVerbosity("silent"), "error");
 
     checkConsoleMethod("log", false);
     checkConsoleMethod("warn", false);
     checkConsoleMethod("error", false);
 
-    setVerbosity("log");
+    assert.strictEqual(setVerbosity("log"), "silent");
 
     checkConsoleMethod("log", true);
     checkConsoleMethod("warn", true);

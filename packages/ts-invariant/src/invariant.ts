@@ -47,8 +47,10 @@ export namespace invariant {
   export const error = wrapConsoleMethod("error");
 }
 
-export function setVerbosity(level: VerbosityLevel) {
+export function setVerbosity(level: VerbosityLevel): VerbosityLevel {
+  const old = verbosityLevels[verbosityLevel];
   verbosityLevel = Math.max(0, verbosityLevels.indexOf(level));
+  return old;
 }
 
 // Code that uses ts-invariant with rollup-plugin-invariant may want to
