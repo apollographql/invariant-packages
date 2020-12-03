@@ -4,6 +4,7 @@ import typescript from 'typescript';
 const globals = {
   __proto__: null,
   tslib: "tslib",
+  "@ungap/global-this": "globalThisPolyfill",
 };
 
 function external(id) {

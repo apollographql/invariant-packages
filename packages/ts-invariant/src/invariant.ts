@@ -58,20 +58,15 @@ export function setVerbosity(level: VerbosityLevel): VerbosityLevel {
 // However, because most ESM-to-CJS compilers will rewrite the process import
 // as tsInvariant.process, which prevents proper replacement by minifiers, we
 // also attempt to define the stub globally when it is not already defined.
-let processStub = { env: {} } as typeof process;
+import globalThis from "@ungap/global-this";
+const processStub = globalThis.process || { env: {} };
 export { processStub as process };
-if (typeof process === "object") {
-  processStub = process;
-} else try {
-  // Using Function to evaluate this assignment in global scope also escapes
-  // the strict mode of the current module, thereby allowing the assignment.
-  // Inspired by https://github.com/facebook/regenerator/pull/369.
-  Function("stub", "process = stub")(processStub);
-} catch (atLeastWeTried) {
-  // The assignment can fail if a Content Security Policy heavy-handedly
-  // forbids Function usage. In those environments, developers should take
-  // extra care to replace process.env.NODE_ENV in their production builds,
-  // or define an appropriate global.process polyfill.
+if (!globalThis.process) try {
+  Object.defineProperty(globalThis, "process", {
+    value: processStub,
+  });
+} catch {
+  // If this fails, it isn't the end of the world.
 }
 
 export default invariant;
