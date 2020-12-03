@@ -58,7 +58,7 @@ export function setVerbosity(level: VerbosityLevel): VerbosityLevel {
 // However, because most ESM-to-CJS compilers will rewrite the process import
 // as tsInvariant.process, which prevents proper replacement by minifiers, we
 // also attempt to define the stub globally when it is not already defined.
-let processStub: NodeJS.Process = { env: {} } as any;
+let processStub = { env: {} } as typeof process;
 export { processStub as process };
 if (typeof process === "object") {
   processStub = process;
