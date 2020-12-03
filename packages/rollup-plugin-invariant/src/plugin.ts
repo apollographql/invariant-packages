@@ -14,6 +14,7 @@ export default function invariantPlugin(options: PluginOptions = {}) {
   let nextErrorCode = 1;
 
   return {
+    name: "rollup-plugin-invariant",
     transform(code: string, id: string) {
       if (!filter(id)) {
         return;
