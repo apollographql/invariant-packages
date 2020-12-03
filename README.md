@@ -2,6 +2,21 @@
 
 Packages for working with `invariant(condition, message)` assertions.
 
+### :warning: If you came here because of an Apollo Client error message like the following:
+```
+Invariant Violation: Invariant Violation: 27 (see https://github.com/apollographql/invariant-packages)
+```
+you should consult the file `node_modules/@apollo/client/invariantErrorCodes.js` for more details about the numbered invariant:
+```
+  27: {
+    file: "@apollo/client/react/context/ApolloConsumer.js",
+
+    node: invariant(context && context.client, 'Could not find "client" in the context of ApolloConsumer. ' +
+        'Wrap the root component in an <ApolloProvider>.')
+  },
+```
+The exact contents of the `invariantErrorCodes.js` file can change between `@apollo/client` releases, so make sure you're consulting the same version of `@apollo/client` that threw the error. Note also that the file is generated during the release process, and is not checked into the https://github.com/apollographql/apollo-client repository. This file was first included in `@apollo/client@3.1.0`.
+
 ## Usage
 
 This repository is home to the [`ts-invariant`](packages/ts-invariant) and [`rollup-plugin-invariant`](packages/rollup-plugin-invariant) packages.
@@ -105,7 +120,20 @@ With `errorCodes` enabled, `InvariantError` messages will be displayed as
 Invariant Violation: <error code> (see https://github.com/apollographql/invariant-packages)
 ```
 
-Since the full development version of the error is colocated with the production one in code that has been transformed by `rollup-plugin-invariant`, it should be relatively easy to determine the nature of the error by looking for the given error code in the unminified bundle.
+For example, if you see an error of the form
+```
+Invariant Violation: Invariant Violation: 38 (see https://github.com/apollographql/invariant-packages)
+```
+you should consult the file `node_modules/@apollo/client/invariantErrorCodes.js` for more details about the numbered invariant:
+```
+  38: {
+    file: "@apollo/client/utilities/graphql/directives.js",
+    node: invariant(evaledValue !== void 0, "Invalid variable referenced in @" + directive.name.value + " directive.")
+  },
+```
+The dynamic value of `directive.name.value` will not be provided because those arguments are pruned in production (leaving just `invariant(evaledValue !== void)`), but this information should allow you to set a breakpoint in the `node_modules/@apollo/client/utilities/graphql/directives.js` file to investigate further.
+
+The exact contents of the `invariantErrorCodes.js` file can change between `@apollo/client` releases, so make sure you're consulting the same version of `@apollo/client` that threw the error. Note also that the file is generated during the release process, and is not checked into the https://github.com/apollographql/apollo-client repository. This file was first included in `@apollo/client@3.1.0`.
 
 #### Automatic `process` import
 
