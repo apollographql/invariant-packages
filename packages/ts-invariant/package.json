@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@types/ungap__global-this": "^0.3.1",
-    "@ungap/global-this": "^0.4.1",
+    "@ungap/global-this": "^0.4.2",
     "tslib": "^1.9.3"
   },
   "devDependencies": {
