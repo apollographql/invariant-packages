@@ -37,7 +37,7 @@
     "invariant": "^2.2.4",
     "mocha": "^8.2.0",
     "rollup": "^2.32.1",
-    "rollup-plugin-typescript2": "^0.28.0"
+    "rollup-plugin-typescript2": "^0.29.0"
   },
   "engines": {
     "node": ">=8"
