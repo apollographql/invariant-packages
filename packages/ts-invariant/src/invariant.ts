@@ -1,3 +1,7 @@
+import globalThis from "@ungap/global-this";
+const global = globalThis as any;
+const console = global.console;
+
 const genericMessage = "Invariant Violation";
 const {
   setPrototypeOf = function (obj: any, proto: any) {
@@ -58,10 +62,9 @@ export function setVerbosity(level: VerbosityLevel): VerbosityLevel {
 // However, because most ESM-to-CJS compilers will rewrite the process import
 // as tsInvariant.process, which prevents proper replacement by minifiers, we
 // also attempt to define the stub globally when it is not already defined.
-import globalThis from "@ungap/global-this";
-const processStub = globalThis.process || { env: {} };
+const processStub = global.process || { env: {} };
 export { processStub as process };
-if (!globalThis.process) try {
+if (!global.process) try {
   Object.defineProperty(globalThis, "process", {
     value: processStub,
   });

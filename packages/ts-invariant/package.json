@@ -25,7 +25,10 @@
     "build": "tsc && rollup -c",
     "mocha": "mocha --reporter spec --full-trace lib/tests.js",
     "prepublish": "npm run build",
-    "test": "npm run build && npm run mocha"
+    "pretest": "npm run build",
+    "test": "npm run test:mocha && npm run test:no-node",
+    "test:mocha": "npm run mocha",
+    "test:no-node": "! grep -i node lib/invariant.d.ts"
   },
   "dependencies": {
     "@types/ungap__global-this": "^0.3.1",
