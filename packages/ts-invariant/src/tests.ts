@@ -84,7 +84,7 @@ describe("ts-invariant", function () {
   ) {
     const argsReceived: any[][] = [];
     const originalMethod = console[name];
-    console[name] = (...args) => {
+    console[name] = (...args: any[]) => {
       argsReceived.push(args);
     };
     try {
