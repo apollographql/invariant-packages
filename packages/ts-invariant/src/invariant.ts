@@ -67,6 +67,9 @@ export { processStub as process };
 if (!global.process) try {
   Object.defineProperty(globalThis, "process", {
     value: processStub,
+    writable: true,
+    enumerable: false,
+    configurable: true
   });
 } catch {
   // If this fails, it isn't the end of the world.
