@@ -64,15 +64,5 @@ export function setVerbosity(level: VerbosityLevel): VerbosityLevel {
 // also attempt to define the stub globally when it is not already defined.
 const processStub = global.process || { env: {} };
 export { processStub as process };
-if (!global.process) try {
-  Object.defineProperty(globalThis, "process", {
-    value: processStub,
-    writable: true,
-    enumerable: false,
-    configurable: true
-  });
-} catch {
-  // If this fails, it isn't the end of the world.
-}
 
 export default invariant;
