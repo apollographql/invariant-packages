@@ -4,6 +4,7 @@ import defaultExport, {
   InvariantError,
   setVerbosity,
   process,
+  processStub,
 } from "./invariant";
 import reactInvariant from "invariant";
 
@@ -144,7 +145,16 @@ describe("ts-invariant", function () {
     checkConsoleMethod("error", true);
   });
 
-  it("should provide a usable process.env stub", function () {
+  it("should export a usable process polyfill", function () {
+    assert.strictEqual(typeof process, "object");
+    assert.strictEqual(typeof process.env, "object");
+    if (process.versions) {
+      assert.strictEqual(typeof process.versions.node, "string");
+    }
+  });
+
+  it("should export a usable processStub", function () {
+    const process = processStub;
     assert.strictEqual(typeof process, "object");
     assert.strictEqual(typeof process.env, "object");
     if (process.versions) {
