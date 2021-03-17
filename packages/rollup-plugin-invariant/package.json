@@ -1,6 +1,6 @@
 {
   "name": "rollup-plugin-invariant",
-  "version": "0.6.4",
+  "version": "0.7.0",
   "author": "Ben Newman <ben@apollographql.com>",
   "description": "Rollup plugin to strip invariant(condition, message) strings in production",
   "license": "MIT",
