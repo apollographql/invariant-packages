@@ -1,7 +1,3 @@
-import globalThis from "@ungap/global-this";
-const global = globalThis as any;
-const console = global.console;
-
 const genericMessage = "Invariant Violation";
 const {
   setPrototypeOf = function (obj: any, proto: any) {
