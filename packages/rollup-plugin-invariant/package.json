@@ -23,8 +23,9 @@
     "url": "https://github.com/apollographql/invariant-packages/issues"
   },
   "scripts": {
-    "build": "tsc",
-    "mocha": "mocha --reporter spec --full-trace lib/tests.js",
+    "build": "npm run tsc",
+    "tsc": "../../node_modules/.bin/tsc",
+    "mocha": "../../node_modules/.bin/mocha --reporter spec --full-trace lib/tests.js",
     "prepublish": "npm run build",
     "test": "npm run build && npm run mocha"
   },
@@ -35,7 +36,6 @@
   },
   "devDependencies": {
     "acorn": "^8.0.4",
-    "mocha": "^8.2.0",
     "react": "^16.7.0",
     "react-apollo": "^2.4.1",
     "react-dom": "^16.7.0",
