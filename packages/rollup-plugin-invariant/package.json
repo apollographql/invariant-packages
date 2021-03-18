@@ -23,7 +23,8 @@
     "url": "https://github.com/apollographql/invariant-packages/issues"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "npm run tsc",
+    "tsc": "../../node_modules/.bin/tsc",
     "mocha": "mocha --reporter spec --full-trace lib/tests.js",
     "prepublish": "npm run build",
     "test": "npm run build && npm run mocha"

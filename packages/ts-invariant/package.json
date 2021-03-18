@@ -22,7 +22,9 @@
     "url": "https://github.com/apollographql/invariant-packages/issues"
   },
   "scripts": {
-    "build": "tsc && rollup -c",
+    "build": "npm run tsc && npm run rollup",
+    "tsc": "../../node_modules/.bin/tsc",
+    "rollup": "../../node_modules/.bin/rollup -c",
     "mocha": "mocha --reporter spec --full-trace lib/tests.js",
     "prepublish": "npm run build",
     "pretest": "npm run build",
@@ -38,9 +40,7 @@
   "devDependencies": {
     "@types/invariant": "^2.2.29",
     "invariant": "^2.2.4",
-    "mocha": "^8.2.0",
-    "rollup": "^2.32.1",
-    "rollup-plugin-typescript2": "^0.30.0"
+    "mocha": "^8.2.0"
   },
   "engines": {
     "node": ">=8"
