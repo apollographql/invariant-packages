@@ -32,7 +32,7 @@
   "dependencies": {
     "recast": "^0.20.4",
     "rollup-pluginutils": "^2.3.3",
-    "tslib": "^1.9.3"
+    "tslib": "^2.1.0"
   },
   "devDependencies": {
     "acorn": "^8.0.4",
