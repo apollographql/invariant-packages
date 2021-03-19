@@ -33,7 +33,7 @@
     "test:no-node": "! grep -i node lib/invariant.d.ts"
   },
   "dependencies": {
-    "tslib": "^1.9.3"
+    "tslib": "^2.1.0"
   },
   "devDependencies": {
     "@types/invariant": "^2.2.29",
