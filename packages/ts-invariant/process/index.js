@@ -2,12 +2,21 @@ function maybe(thunk) {
   try { return thunk() } catch (_) {}
 }
 
+const safeGlobal = (
+  maybe(() => globalThis) ||
+  maybe(() => window) ||
+  maybe(() => self) ||
+  maybe(() => global) ||
+  maybe(() => Function("return this")())
+);
+
 let needToRemove = false;
 
 export function install() {
-  if (!maybe(() => process.env.NODE_ENV) &&
+  if (safeGlobal &&
+      !maybe(() => process.env.NODE_ENV) &&
       !maybe(() => process)) {
-    Object.defineProperty(global, "process", {
+    Object.defineProperty(safeGlobal, "process", {
       value: {
         env: {
           // This default needs to be "production" instead of "development", to
@@ -31,7 +40,7 @@ install();
 
 export function remove() {
   if (needToRemove) {
-    delete global.process;
+    delete safeGlobal.process;
     needToRemove = false;
   }
 }
