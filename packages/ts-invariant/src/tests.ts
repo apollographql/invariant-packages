@@ -3,10 +3,10 @@ import defaultExport, {
   invariant,
   InvariantError,
   setVerbosity,
+  process,
+  processStub,
 } from "./invariant";
 import reactInvariant from "invariant";
-
-import { install, remove } from "../process";
 
 describe("ts-invariant", function () {
   it("should support both named and default exports", function () {
@@ -145,33 +145,28 @@ describe("ts-invariant", function () {
     checkConsoleMethod("error", true);
   });
 
+  it("should export a usable process polyfill", function () {
+    assert.strictEqual(typeof process, "object");
+    assert.strictEqual(typeof process.env, "object");
+    if (process.versions) {
+      assert.strictEqual(typeof process.versions.node, "string");
+    }
+  });
+
+  it("should export a usable processStub", function () {
+    const process = processStub;
+    assert.strictEqual(typeof process, "object");
+    assert.strictEqual(typeof process.env, "object");
+    if (process.versions) {
+      assert.strictEqual(typeof process.versions.node, "string");
+    }
+  });
+
   it("should let TypeScript know about the assertion made", function () {
     const value: { foo?: { bar?: string } } = {foo: {bar: "bar"}};
     invariant(value.foo, 'fail');
 
      // On compile time this should not raise "TS2532: Object is possibly 'undefined'."
     assert.strictEqual(value.foo.bar, "bar");
-  });
-
-  describe("ts-invariant/process", function () {
-    it("install and remove", function () {
-      const origDesc = Object.getOwnPropertyDescriptor(global, "process");
-      Object.defineProperty(global, "process", {
-        value: void 0,
-        configurable: true,
-      });
-      assert.strictEqual(process, void 0);
-      install();
-      assert.deepStrictEqual(process, {
-        env: {
-          NODE_ENV: "production",
-        },
-      });
-      remove();
-      assert.strictEqual(typeof process, "undefined");
-      if (origDesc) {
-        Object.defineProperty(global, "process", origDesc);
-      }
-    });
   });
 });

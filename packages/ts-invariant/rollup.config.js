@@ -11,10 +11,7 @@ function external(id) {
   return id in globals;
 }
 
-const jobs = [];
-export default jobs;
-
-jobs.push({
+export default [{
   input: "src/invariant.ts",
   external,
   output: {
@@ -29,9 +26,7 @@ jobs.push({
       tsconfig: "./tsconfig.rollup.json",
     }),
   ],
-});
-
-jobs.push({
+}, {
   input: "lib/invariant.esm.js",
   external,
   output: {
@@ -43,17 +38,4 @@ jobs.push({
     name: "ts-invariant",
     globals,
   },
-});
-
-jobs.push({
-  input: "process/module.js",
-  external,
-  output: {
-    file: "process/main.js",
-    format: "cjs",
-    exports: "named",
-    sourcemap: true,
-    name: "ts-invariant/process",
-    globals,
-  },
-});
+}];

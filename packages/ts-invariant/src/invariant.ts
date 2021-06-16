@@ -53,4 +53,20 @@ export function setVerbosity(level: VerbosityLevel): VerbosityLevel {
   return old;
 }
 
+// Code that uses ts-invariant with rollup-plugin-invariant may want to
+// import this process stub to avoid errors evaluating process.env.NODE_ENV.
+// However, because most ESM-to-CJS compilers will rewrite the process import
+// as tsInvariant.process, which prevents proper replacement by minifiers, we
+// also export processStub, so you can import { invariant, processStub } from
+// "ts-invariant" and assign processStub to a local variable named process.
+export const processStub: {
+  env: Record<string, any>;
+  [key: string]: any;
+} = (
+  typeof process === "object" &&
+  typeof process.env === "object"
+) ? process : { env: {} };
+
+export { processStub as process };
+
 export default invariant;
