@@ -46,7 +46,7 @@ jobs.push({
 });
 
 jobs.push({
-  input: "process/module.js",
+  input: "process/index.js",
   external,
   output: {
     file: "process/main.js",
