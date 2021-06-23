@@ -46,10 +46,10 @@ jobs.push({
 });
 
 jobs.push({
-  input: "process/index.js",
+  input: "process/index.mjs",
   external,
   output: {
-    file: "process/main.js",
+    file: "process/main.cjs",
     format: "cjs",
     exports: "named",
     sourcemap: true,
