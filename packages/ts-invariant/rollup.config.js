@@ -18,7 +18,7 @@ jobs.push({
   input: "src/invariant.ts",
   external,
   output: {
-    file: "lib/invariant.esm.js",
+    file: "lib/invariant.mjs",
     format: "esm",
     sourcemap: true,
     globals,
@@ -32,11 +32,11 @@ jobs.push({
 });
 
 jobs.push({
-  input: "lib/invariant.esm.js",
+  input: "lib/invariant.mjs",
   external,
   output: {
     // Intentionally overwrite the invariant.js file written by tsc:
-    file: "lib/invariant.js",
+    file: "lib/invariant.cjs",
     format: "cjs",
     exports: "named",
     sourcemap: true,

@@ -4,8 +4,8 @@
   "author": "Ben Newman <ben@apollographql.com>",
   "description": "TypeScript implementation of invariant(condition, message)",
   "license": "MIT",
-  "main": "lib/invariant.js",
-  "module": "lib/invariant.esm.js",
+  "main": "lib/invariant.cjs",
+  "module": "lib/invariant.mjs",
   "types": "lib/invariant.d.ts",
   "keywords": [
     "invariant",
