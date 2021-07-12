@@ -1,5 +1,6 @@
 import assert from "assert";
 import defaultExport, {
+  ConsoleMethodName,
   invariant,
   InvariantError,
   setVerbosity,
@@ -80,7 +81,7 @@ describe("ts-invariant", function () {
   });
 
   function checkConsoleMethod(
-    name: "log" | "warn" | "error",
+    name: ConsoleMethodName,
     expectOutput: boolean,
   ) {
     const argsReceived: any[][] = [];
@@ -103,6 +104,10 @@ describe("ts-invariant", function () {
     }
   }
 
+  it("invariant.debug", function () {
+    checkConsoleMethod("debug", false);
+  });
+
   it("invariant.log", function () {
     checkConsoleMethod("log", true);
   });
@@ -116,30 +121,42 @@ describe("ts-invariant", function () {
   });
 
   it("setVerbosity", function () {
+    checkConsoleMethod("debug", false);
     checkConsoleMethod("log", true);
     checkConsoleMethod("warn", true);
     checkConsoleMethod("error", true);
 
     assert.strictEqual(setVerbosity("warn"), "log");
 
+    checkConsoleMethod("debug", false);
     checkConsoleMethod("log", false);
     checkConsoleMethod("warn", true);
     checkConsoleMethod("error", true);
 
     assert.strictEqual(setVerbosity("error"), "warn");
 
+    checkConsoleMethod("debug", false);
     checkConsoleMethod("log", false);
     checkConsoleMethod("warn", false);
     checkConsoleMethod("error", true);
 
-    assert.strictEqual(setVerbosity("silent"), "error");
+    assert.strictEqual(setVerbosity("debug"), "error");
 
+    checkConsoleMethod("debug", true);
+    checkConsoleMethod("log", true);
+    checkConsoleMethod("warn", true);
+    checkConsoleMethod("error", true);
+
+    assert.strictEqual(setVerbosity("silent"), "debug");
+
+    checkConsoleMethod("debug", false);
     checkConsoleMethod("log", false);
     checkConsoleMethod("warn", false);
     checkConsoleMethod("error", false);
 
     assert.strictEqual(setVerbosity("log"), "silent");
 
+    checkConsoleMethod("debug", false);
     checkConsoleMethod("log", true);
     checkConsoleMethod("warn", true);
     checkConsoleMethod("error", true);
