@@ -7,7 +7,7 @@ const safeGlobal = (
   maybe(function() { return window }) ||
   maybe(function() { return self }) ||
   maybe(function() { return global }) ||
-  maybe(function() { return Function ("return this")() })
+  maybe(function() { return Function("return this")() })
 );
 
 let needToRemove = false;

@@ -7,19 +7,19 @@ function maybe(thunk) {
 }
 
 const safeGlobal = (
-  maybe(() => globalThis) ||
-  maybe(() => window) ||
-  maybe(() => self) ||
-  maybe(() => global) ||
-  maybe(() => Function("return this")())
+  maybe(function() { return globalThis }) ||
+  maybe(function() { return window }) ||
+  maybe(function() { return self }) ||
+  maybe(function() { return global }) ||
+  maybe(function() { return Function("return this")() })
 );
 
 let needToRemove = false;
 
 function install() {
   if (safeGlobal &&
-      !maybe(() => process.env.NODE_ENV) &&
-      !maybe(() => process)) {
+      !maybe(function() { return process.env.NODE_ENV }) &&
+      !maybe(function() { return process })) {
     Object.defineProperty(safeGlobal, "process", {
       value: {
         env: {
