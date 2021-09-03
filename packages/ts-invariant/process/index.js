@@ -2,7 +2,7 @@ function maybe(thunk) {
   try { return thunk() } catch (_) {}
 }
 
-const safeGlobal = (
+var safeGlobal = (
   maybe(function() { return globalThis }) ||
   maybe(function() { return window }) ||
   maybe(function() { return self }) ||
@@ -10,7 +10,7 @@ const safeGlobal = (
   maybe(function() { return Function("return this")() })
 );
 
-let needToRemove = false;
+var needToRemove = false;
 
 export function install() {
   if (safeGlobal &&
