@@ -5,7 +5,7 @@
 
 Supports `invariant.log`, `invariant.warn`, and `invariant.error`, which
 wrap `console` methods of the same name, and may be stripped in production
-by [`rollup-plugin-invariant`](../rollup-plugin-invariant).
+by [`rollup-plugin-invariant`](../../archived/rollup-plugin-invariant).
 
 The verbosity of these methods can be globally reconfigured using the
 `setVerbosity` function:

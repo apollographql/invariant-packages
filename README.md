@@ -19,7 +19,7 @@ The exact contents of the `invariantErrorCodes.js` file can change between `@apo
 
 ## Usage
 
-This repository is home to the [`ts-invariant`](packages/ts-invariant) and [`rollup-plugin-invariant`](packages/rollup-plugin-invariant) packages.
+This repository is home to the [`ts-invariant`](packages/ts-invariant) and [`rollup-plugin-invariant`](archived/rollup-plugin-invariant) packages.
 
 ### Runtime usage (`ts-invariant`)
 
