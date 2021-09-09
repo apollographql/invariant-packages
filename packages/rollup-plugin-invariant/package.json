@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "acorn": "^8.0.4",
-    "react": "^16.7.0",
+    "react": "^17.0.2",
     "react-apollo": "^2.4.1",
     "react-dom": "^16.7.0",
     "ts-invariant": "file:../ts-invariant"
