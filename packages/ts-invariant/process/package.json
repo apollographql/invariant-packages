@@ -3,6 +3,7 @@
   "main": "./main.js",
   "module": "./index.js",
   "types": "./index.d.ts",
+  "type": "module",
   "sideEffects": [
     "./main.js",
     "./index.js"
