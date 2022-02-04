@@ -4,10 +4,10 @@ import defaultExport, {
   invariant,
   InvariantError,
   setVerbosity,
-} from "./invariant";
+} from "./invariant.js";
 import reactInvariant from "invariant";
 
-import { install, remove } from "../process";
+import { install, remove } from "../process/index.js";
 
 describe("ts-invariant", function () {
   it("should support both named and default exports", function () {
