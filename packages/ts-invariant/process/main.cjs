@@ -57,4 +57,4 @@ function remove() {
 
 exports.install = install;
 exports.remove = remove;
-//# sourceMappingURL=main.js.map
+//# sourceMappingURL=main.cjs.map
