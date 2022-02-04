@@ -1,6 +1,7 @@
 {
   "name": "ts-invariant/process",
-  "main": "./main.js",
+  "type": "module",
+  "main": "./main.cjs",
   "module": "./index.js",
   "types": "./index.d.ts",
   "sideEffects": [
