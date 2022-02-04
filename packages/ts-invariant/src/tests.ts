@@ -1,13 +1,14 @@
 import assert from "assert";
+import reactInvariant from "invariant";
+
+import { install, remove } from "../process/index.js";
+
 import defaultExport, {
   ConsoleMethodName,
   invariant,
   InvariantError,
   setVerbosity,
 } from "./invariant.js";
-import reactInvariant from "invariant";
-
-import { install, remove } from "../process/index.js";
 
 describe("ts-invariant", function () {
   it("should support both named and default exports", function () {

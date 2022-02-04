@@ -1,8 +1,7 @@
-import typescriptPlugin from 'rollup-plugin-typescript2';
-import typescript from 'typescript';
-
 const globals = {
   __proto__: null,
+  assert: "assert",
+  invariant: "reactInvariant",
   tslib: "tslib",
   "@ungap/global-this": "globalThisPolyfill",
 };
@@ -15,24 +14,7 @@ const jobs = [];
 export default jobs;
 
 jobs.push({
-  input: "src/invariant.ts",
-  external,
-  output: {
-    file: "lib/invariant.esm.js",
-    format: "esm",
-    sourcemap: true,
-    globals,
-  },
-  plugins: [
-    typescriptPlugin({
-      typescript,
-      tsconfig: "./tsconfig.rollup.json",
-    }),
-  ],
-});
-
-jobs.push({
-  input: "lib/invariant.esm.js",
+  input: "lib/invariant.js",
   external,
   output: {
     file: "lib/invariant.cjs",
@@ -40,6 +22,19 @@ jobs.push({
     exports: "named",
     sourcemap: true,
     name: "ts-invariant",
+    globals,
+  },
+});
+
+jobs.push({
+  input: "lib/tests.js",
+  external,
+  output: {
+    file: "lib/tests.bundle.cjs",
+    format: "cjs",
+    exports: "named",
+    sourcemap: true,
+    name: "ts-invariant-tests-cjs-bundle",
     globals,
   },
 });
