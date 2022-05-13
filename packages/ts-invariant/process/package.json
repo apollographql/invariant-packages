@@ -5,7 +5,8 @@
   "module": "./index.js",
   "types": "./index.d.ts",
   "sideEffects": [
-    "./main.js",
+    "./main.cjs",
+    "./main.cjs.native.js",
     "./index.js"
   ]
 }

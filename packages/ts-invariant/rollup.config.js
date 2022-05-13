@@ -1,3 +1,5 @@
+import { promises as fs } from "fs";
+
 const globals = {
   __proto__: null,
   assert: "assert",
@@ -8,6 +10,19 @@ const globals = {
 
 function external(id) {
   return id in globals;
+}
+
+function copyPlugin() {
+  return {
+    name: "copy *.cjs to *.cjs.native.js",
+    async writeBundle({ file }) {
+      const buffer = await fs.readFile(file);
+      await fs.writeFile(
+        file + ".native.js",
+        buffer,
+      );
+    },
+  };
 }
 
 const jobs = [];
@@ -24,6 +39,9 @@ jobs.push({
     name: "ts-invariant",
     globals,
   },
+  plugins: [
+    copyPlugin(),
+  ],
 });
 
 jobs.push({
@@ -50,4 +68,7 @@ jobs.push({
     name: "ts-invariant/process",
     globals,
   },
+  plugins: [
+    copyPlugin(),
+  ],
 });
